@@ -8,7 +8,7 @@ const PORT = 3000;
 const httpServer = createServer();
 const io = new Server(httpServer, {
     cors: {
-    origin: "http://localhost:5173/"
+    origin: "http://localhost:5173"
     },
     pingTimeout: 60000,
     
@@ -16,6 +16,12 @@ const io = new Server(httpServer, {
 app.get('/', async (req, res) => {
     res.json({ status: true, message: "Our node.js app works" })
 });
+
+
+io.on('connection', socket => {
+    console.log(socket.id)
+})
+
 
 
 
