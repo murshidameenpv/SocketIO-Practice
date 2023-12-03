@@ -12,6 +12,16 @@ const io = new Server(httpServer, {
     pingTimeout: 60000,
     
 })
+
+
+socketIO.on('connection', (socket) => {
+    console.log(`⚡: ${socket.id} user just connected!`);
+    socket.on('disconnect', () => {
+      console.log('🔥: A user disconnected');
+    });
+});
+
+
 app.get('/', async (req, res) => {
     res.json({ status: true, message: "Our node.js app works" })
 });
