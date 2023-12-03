@@ -8,7 +8,7 @@ const PORT = 3000;
 const httpServer = createServer();
 const io = new Server(httpServer, {
     cors: {
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173  "
     },
     pingTimeout: 60000,
     
@@ -18,10 +18,18 @@ app.get('/', async (req, res) => {
 });
 
 
-io.on('connection', socket => {
-    console.log(socket.id)
-})
-
+io.on('connection',  (socket) => {
+   console.log(`Client connected: ${socket.id}`);
+    socket.on('send-message', (message,room) => {
+        // io.emit("receive-message", message)
+        //when using emit ,it will send requests to all of its clients ,including the client that actually made first request
+        if (room === "") {
+        socket.broadcast.emit("receive-message", message)
+        } else {
+            socket.to(room).emit("receive-message",message)
+        }
+    });
+});
 
 
 
