@@ -1,4 +1,3 @@
-import { create } from "domain";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -20,15 +19,20 @@ app.get('/', async (req, res) => {
 
 io.on('connection',  (socket) => {
    console.log(`Client connected: ${socket.id}`);
-    socket.on('send-message', (message,room) => {
+    socket.on('send-message', ({room,message}) => {
         // io.emit("receive-message", message)
         //when using emit ,it will send requests to all of its clients ,including the client that actually made first request
-        if (room === "") {
-        socket.broadcast.emit("receive-message", message)
+        if (room && room.trim()!=="") {
+        io.to(room).emit("receive-message", message);
         } else {
-            socket.to(room).emit("receive-message",message)
+              socket.broadcast.emit("receive-message", message); 
         }
     });
+    socket.on('join-room', room => {
+
+        socket.join(room)   
+        socket.emit('room-joined',`You have joined the room ${room}`)
+    })
 });
 
 
