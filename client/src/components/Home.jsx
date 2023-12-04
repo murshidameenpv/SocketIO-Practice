@@ -23,7 +23,7 @@ const Home = () => {
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
-      <button className="home__cta">SIGN IN</button>
+      <button disabled={!userName} className="home__cta">SIGN IN</button>
     </form>
   );
 };

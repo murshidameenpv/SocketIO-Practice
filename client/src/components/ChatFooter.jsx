@@ -1,11 +1,19 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
-const ChatFooter = () => {
+const ChatFooter = ({socket}) => {
   const [message, setMessage] = useState('');
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log({ userName: localStorage.getItem('userName'), message });
+    if (message.trim() && localStorage.getItem('userName')) {
+      socket.emit('send-message',{
+        text: message,
+        name: localStorage.getItem('userName'),
+        id: `${socket.id}${Math.random()}`,
+        socketID: socket.id,
+      })
+    }
     setMessage('');
   };
   return (
@@ -25,3 +33,8 @@ const ChatFooter = () => {
 };
 
 export default ChatFooter;
+
+
+ChatFooter.propTypes = {
+  socket: PropTypes.object.isRequired,
+};

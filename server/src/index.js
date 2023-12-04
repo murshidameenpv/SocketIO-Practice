@@ -14,8 +14,13 @@ const io = new Server(httpServer, {
 })
 
 
-socketIO.on('connection', (socket) => {
+io.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
+
+    socket.on('send-message', (data) => {
+        console.log(data);
+        io.emit("message-received", data)
+    })
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
     });
