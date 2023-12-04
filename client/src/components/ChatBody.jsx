@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const ChatBody = ({ messages }) => {
+const ChatBody = ({ messages,lastMessageRef }) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -41,6 +41,7 @@ const ChatBody = ({ messages }) => {
         <div className="message__status">
           <p>Someone is typing...</p>
         </div>
+        <div ref={lastMessageRef} />
       </div>
     </>
   );
@@ -56,4 +57,8 @@ ChatBody.propTypes = {
     text: PropTypes.string.isRequired,
     socketId:PropTypes.string.isRequired,
   })).isRequired,
+  lastMessageRef: PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]).isRequired,
 };
