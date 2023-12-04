@@ -1,13 +1,15 @@
 import  { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import propTypes from 'prop-types'
 
-const Home = () => {
+const Home = ({socket}) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem('userName', userName);
+    socket.emit('new-user',{userName,socketId:socket.id})
     navigate('/chat');
   };
   return (
@@ -29,3 +31,7 @@ const Home = () => {
 };
 
 export default Home;
+
+Home.propTypes = {
+  socket:propTypes.object.isRequired
+}

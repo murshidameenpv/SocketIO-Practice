@@ -12,8 +12,7 @@ const io = new Server(httpServer, {
     pingTimeout: 60000,
     
 })
-
-
+let users = [];
 io.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
@@ -21,8 +20,17 @@ io.on('connection', (socket) => {
         console.log(data);
         io.emit("message-received", data)
     })
+    socket.on("new-user", (data) => {
+        console.log(data,"new");
+        users.push(data)
+        io.emit('all-users',users)
+    })
     socket.on('disconnect', () => {
-      console.log('🔥: A user disconnected');
+        console.log('🔥: A user disconnected');
+         //Updates the list of users when a user disconnects from the server
+        users = users.filter((user) => (user.socketId !== socket.id))
+        io.emit('all-users', users)
+        socket.disconnect()
     });
 });
 
