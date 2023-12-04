@@ -32,6 +32,12 @@ io.on('connection', (socket) => {
         io.emit('all-users', users)
         socket.disconnect()
     });
+    socket.on("typing", (data) => {
+        socket.broadcast.emit("typing-response",data)
+    })
+    socket.on('stop-typing', () => {
+        socket.broadcast.emit("typing-response","")
+    })
 });
 
 

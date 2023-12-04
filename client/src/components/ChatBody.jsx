@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const ChatBody = ({ messages,lastMessageRef }) => {
+const ChatBody = ({ messages,lastMessageRef,typingStatus}) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -20,16 +20,16 @@ const ChatBody = ({ messages,lastMessageRef }) => {
       </header>
 
       <div className="message__container">
-        {messages.map((message,index) =>
+        {messages.map((message) =>
           message.name === localStorage.getItem('userName') ? (
-            <div className="message__chats" key={index}>
+            <div className="message__chats" key={message.socketId}>
               <p className="sender__name">You</p>
               <div className="message__sender">
                 <p>{message.text}</p>
               </div>
             </div>
           ) : (
-            <div className="message__chats" key={index}>
+            <div className="message__chats" key={message.socketId}>
               <p>{message.name}</p>
               <div className="message__recipient">
                 <p>{message.text}</p>
@@ -39,7 +39,7 @@ const ChatBody = ({ messages,lastMessageRef }) => {
         )}
 
         <div className="message__status">
-          <p>Someone is typing...</p>
+          <p>{typingStatus}</p>
         </div>
         <div ref={lastMessageRef} />
       </div>
@@ -61,4 +61,5 @@ ChatBody.propTypes = {
     PropTypes.func, 
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
   ]).isRequired,
+  typingStatus:PropTypes.string.isRequired
 };
