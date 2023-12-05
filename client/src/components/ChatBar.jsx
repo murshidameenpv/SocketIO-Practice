@@ -7,7 +7,6 @@ const ChatBar = ({ socket }) => {
       setUsers(data)
     })
   }, [socket, users])
-  console.log(users,"ooooooooooooooo");
   return (
     <div className="chat__sidebar">
       <h2>Open Chat</h2>

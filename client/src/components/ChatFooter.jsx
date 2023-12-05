@@ -16,6 +16,7 @@ const ChatFooter = ({ socket }) => {
       });
       // Emit an event indicating the user has stopped typing
       socket.emit('stop-typing');
+      //
       checkPageStatus(message, localStorage.getItem("userName")) 
     }
     setMessage('');

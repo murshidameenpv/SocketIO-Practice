@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
 });
 
 
+// io is the server instance that represents the Socket.IO server. When you use io.emit, it sends the event to all connected clients. This is typically used when you want to broadcast a message to all users.
+
+// socket on the other hand, represents a specific client connection to the server. When you use socket.emit, it sends the event to the specific client that the socket represents. This is typically used when you want to send a message to a specific user or handle events from a specific user.
+
 app.get('/', async (req, res) => {
     res.json({ status: true, message: "Our node.js app works" })
 });

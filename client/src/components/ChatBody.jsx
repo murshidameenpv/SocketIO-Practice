@@ -9,7 +9,6 @@ const ChatBody = ({ messages,lastMessageRef,typingStatus}) => {
     navigate('/');
     window.location.reload();
   };
-
   return (
     <>
       <header className="chat__mainHeader">
@@ -20,16 +19,16 @@ const ChatBody = ({ messages,lastMessageRef,typingStatus}) => {
       </header>
 
       <div className="message__container">
-        {messages.map((message) =>
+        {messages.map((message,index) =>
           message.name === localStorage.getItem('userName') ? (
-            <div className="message__chats" key={message.socketId}>
+            <div className="message__chats" key={index}>
               <p className="sender__name">You</p>
               <div className="message__sender">
                 <p>{message.text}</p>
               </div>
             </div>
           ) : (
-            <div className="message__chats" key={message.socketId}>
+            <div className="message__chats" key={index}>
               <p>{message.name}</p>
               <div className="message__recipient">
                 <p>{message.text}</p>
@@ -55,7 +54,7 @@ ChatBody.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-    socketId:PropTypes.string.isRequired,
+    socketID:PropTypes.string.isRequired,
   })).isRequired,
   lastMessageRef: PropTypes.oneOfType([
     PropTypes.func, 
