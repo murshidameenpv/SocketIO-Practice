@@ -1,6 +1,9 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import fs from 'fs';
+
+
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +15,14 @@ const io = new Server(httpServer, {
     pingTimeout: 60000,
     
 })
+
+const rawData = fs.readFileSync('./src/db/messages.json');
+const messageData = JSON.parse(rawData)
+
+
+
+
+//socket
 let users = [];
 io.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
@@ -46,7 +57,7 @@ io.on('connection', (socket) => {
 // socket on the other hand, represents a specific client connection to the server. When you use socket.emit, it sends the event to the specific client that the socket represents. This is typically used when you want to send a message to a specific user or handle events from a specific user.
 
 app.get('/', async (req, res) => {
-    res.json({ status: true, message: "Our node.js app works" })
+    res.json(messageData)
 });
 
 

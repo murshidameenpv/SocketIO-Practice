@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
-import { checkPageStatus } from "../utils/functions";
+import checkPageStatus from "../utils/notification.js";
 
 const ChatFooter = ({ socket }) => {
   const [message, setMessage] = useState('');
